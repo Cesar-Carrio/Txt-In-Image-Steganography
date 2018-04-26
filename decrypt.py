@@ -1,8 +1,6 @@
 from PIL import Image
 import re
 
-
-
 #work on decryption first
 def decode(img):
     width, height = img.size
@@ -15,31 +13,20 @@ def decode(img):
         for col in range(width-1,0,-1):
 
             if index_pixel < 11:
-
-                #print(img.getpixel((col,row)))
                 r,g,b = img.getpixel((col,row))
                 #taking binary value and converting into string for later use
                 red_bin = str(bin(r))
                 green_bin = str(bin(g))
                 blue_bin = str(bin(b))
 
-
                 if index_pixel == 10:
                     newString = red_bin[len(red_bin) - 1] + green_bin[len(green_bin) - 1]
                     size_of_msg = size_of_msg + newString
-
-                    #print(size_of_msg)
-
                     num_pixels_req = ((int(size_of_msg[:len(size_of_msg)], 2)))/3 + 11
-                    #print("Pixel number where message ends: "+ str(num_pixels_req))
-
                     index_pixel += 1
-
                 else:
-
                     newString = red_bin[len(red_bin) - 1] + green_bin[len(green_bin) - 1] + blue_bin[len(blue_bin) - 1]
                     size_of_msg = size_of_msg + newString
-
                     index_pixel += 1
 
             elif index_pixel > 10 and index_pixel <= num_pixels_req:
@@ -71,6 +58,3 @@ decrypted_msg2 = decode(img2)
 
 print("My Encoded Test: "+decrypted_msg)
 print(decrypted_msg2)
-
-
-#next thing that needs to be done is put my source code into a file and then read it in to encode in the image
